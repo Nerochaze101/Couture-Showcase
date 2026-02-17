@@ -7,9 +7,18 @@ export interface GalleryVideo {
 
 export const galleryVideos: GalleryVideo[] = [
   {
-    src: "https://player.vimeo.com/external/494252666.hd.mp4?s=2f05903964d8a95616f73315a0c327299c85df3c&profile_id=175",
-    poster: "https://images.unsplash.com/photo-1470309864661-68328b2cd0a5?q=80&w=2070&auto=format&fit=crop",
-    title: "Paris Fashion Week",
-    subtitle: "Autumn / Winter '24"
+    src: "https://vt.tiktok.com/ZSmSfy3dk/",
+    poster: "https://i.pinimg.com/736x/78/6b/78/786b78efdc123937a5bcac58d87a82f2.jpg",
+    title: "Male Kaftan Styles",
+    subtitle: "kaftan, casual African men style"
+  },
+  {
+    src: "https://vt.tiktok.com/ZSmSfy3dk/",
+    poster: "https://www.pinterest.com/pin/513480795040564918/",
+    title: "Male Kaftan Styles",
+    subtitle: "kaftan, casual African men style"
   }
+
+
+
 ];
