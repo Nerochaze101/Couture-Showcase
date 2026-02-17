@@ -4,6 +4,8 @@ import { ArrowDown, Play } from "lucide-react";
 import { Link } from "wouter";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { heroImage, galleryImages } from "@/lib/images";
+import { galleryVideos } from "@/lib/videos";
 
 const HeroSection = () => {
   const { scrollY } = useScroll();
@@ -18,10 +20,9 @@ const HeroSection = () => {
         className="absolute inset-0 z-0"
       >
         <div className="absolute inset-0 bg-black/40 z-10" />
-        {/* Unsplash: Fashion model in elegant dress walking away */}
         <img
-          src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop"
-          alt="Nerochaze Couture Hero"
+          src={heroImage.src}
+          alt={heroImage.title}
           className="w-full h-full object-cover"
         />
       </motion.div>
@@ -42,9 +43,9 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="font-display text-5xl md:text-7xl lg:text-9xl text-white mb-6 leading-none"
         >
-          NEROCHAZE
+          {heroImage.title}
           <span className="block text-3xl md:text-5xl lg:text-6xl mt-2 italic font-light text-white/90">
-            Couture
+            {heroImage.subtitle}
           </span>
         </motion.h1>
         <motion.p
@@ -53,7 +54,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-white/80 text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto mb-10"
         >
-          Where timeless elegance meets modern audacity.
+          {heroImage.description}
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -135,29 +136,6 @@ const AboutSection = () => {
 };
 
 const GallerySection = () => {
-  const images = [
-    {
-      src: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=1974&auto=format&fit=crop",
-      title: "The Midnight Gown",
-      category: "Evening Wear"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1976&auto=format&fit=crop",
-      title: "Gold Dust",
-      category: "Runway 2024"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=1972&auto=format&fit=crop",
-      title: "Obsidian Suit",
-      category: "Tailoring"
-    },
-    {
-      src: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=2073&auto=format&fit=crop",
-      title: "Ethereal Silk",
-      category: "Spring Collection"
-    }
-  ];
-
   return (
     <section id="collections" className="py-24 bg-black px-6">
       <div className="max-w-7xl mx-auto">
@@ -167,7 +145,7 @@ const GallerySection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-          {images.map((img, index) => (
+          {galleryImages.map((img, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}
@@ -200,26 +178,29 @@ const GallerySection = () => {
 const VideoSection = () => {
   return (
     <section className="h-[70vh] w-full relative overflow-hidden group">
-      {/* Unsplash: Dark moody fashion video placeholder or similar high quality image */}
-      <img
-        src="https://images.unsplash.com/photo-1470309864661-68328b2cd0a5?q=80&w=2070&auto=format&fit=crop"
-        alt="Runway Video Placeholder"
-        className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
-      />
-      
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/30 bg-white/5 backdrop-blur-sm flex items-center justify-center mb-8 group-hover:bg-primary group-hover:border-primary transition-colors duration-300"
-        >
-          <Play fill="currentColor" className="w-8 h-8 text-white ml-1 group-hover:text-black transition-colors" />
-        </motion.button>
-        <h3 className="font-display text-3xl md:text-5xl text-white tracking-wide text-center">
-          Paris Fashion Week <br/>
-          <span className="italic text-2xl md:text-3xl text-white/70">Autumn / Winter '24</span>
-        </h3>
-      </div>
+      {galleryVideos.map((video, index) => (
+        <div key={index} className="h-full w-full relative">
+          <img
+            src={video.src}
+            alt={video.title}
+            className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
+          />
+          
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/30 bg-white/5 backdrop-blur-sm flex items-center justify-center mb-8 group-hover:bg-primary group-hover:border-primary transition-colors duration-300"
+            >
+              <Play fill="currentColor" className="w-8 h-8 text-white ml-1 group-hover:text-black transition-colors" />
+            </motion.button>
+            <h3 className="font-display text-3xl md:text-5xl text-white tracking-wide text-center">
+              {video.title} <br/>
+              <span className="italic text-2xl md:text-3xl text-white/70">{video.subtitle}</span>
+            </h3>
+          </div>
+        </div>
+      ))}
     </section>
   );
 };
