@@ -1,11 +1,60 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 import { ArrowDown, Play } from "lucide-react";
 import { Link } from "wouter";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { heroImage, galleryImages } from "@/lib/images";
 import { galleryVideos } from "@/lib/videos";
+
+const CustomCursor = () => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const cursorX = useSpring(0, { damping: 20, stiffness: 200 });
+  const cursorY = useSpring(0, { damping: 20, stiffness: 200 });
+
+  useEffect(() => {
+    const moveCursor = (e: MouseEvent) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX - 20);
+      cursorY.set(e.clientY - 20);
+    };
+
+    const handleHover = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'BUTTON' || target.tagName === 'A' || target.closest('button') || target.closest('a')) {
+        setIsHovering(true);
+      } else {
+        setIsHovering(false);
+      }
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+    window.addEventListener("mouseover", handleHover);
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+      window.removeEventListener("mouseover", handleHover);
+    };
+  }, []);
+
+  return (
+    <>
+      <div 
+        className="custom-cursor" 
+        style={{ left: position.x, top: position.y, transform: 'translate(-50%, -50%)' }}
+      />
+      <motion.div 
+        className="custom-cursor-follower"
+        style={{ 
+          x: cursorX, 
+          y: cursorY,
+          scale: isHovering ? 1.5 : 1,
+          backgroundColor: isHovering ? 'rgba(var(--primary), 0.1)' : 'transparent'
+        }}
+      />
+    </>
+  );
+};
 
 const HeroSection = () => {
   const { scrollY } = useScroll();
@@ -221,6 +270,7 @@ const VideoSection = () => {
 export default function Home() {
   return (
     <div className="bg-background min-h-screen">
+      <CustomCursor />
       <Navigation />
       <HeroSection />
       <AboutSection />
