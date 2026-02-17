@@ -177,27 +177,40 @@ const GallerySection = () => {
 
 const VideoSection = () => {
   return (
-    <section className="h-[70vh] w-full relative overflow-hidden group">
+    <section className="h-screen w-full relative overflow-hidden group">
       {galleryVideos.map((video, index) => (
         <div key={index} className="h-full w-full relative">
-          <img
+          <video
             src={video.src}
-            alt={video.title}
-            className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
+            poster={video.poster}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-60 group-hover:opacity-50 transition-opacity duration-1000 scale-105 group-hover:scale-100 transition-transform duration-[2000ms]"
           />
           
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/30 bg-white/5 backdrop-blur-sm flex items-center justify-center mb-8 group-hover:bg-primary group-hover:border-primary transition-colors duration-300"
+          {/* Glassmorphism Overlay */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 backdrop-blur-[2px]">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.5 }}
+              className="text-center p-12 border border-white/10 bg-white/5 backdrop-blur-md rounded-2xl"
             >
-              <Play fill="currentColor" className="w-8 h-8 text-white ml-1 group-hover:text-black transition-colors" />
-            </motion.button>
-            <h3 className="font-display text-3xl md:text-5xl text-white tracking-wide text-center">
-              {video.title} <br/>
-              <span className="italic text-2xl md:text-3xl text-white/70">{video.subtitle}</span>
-            </h3>
+              <h3 className="font-display text-4xl md:text-6xl text-white tracking-tighter mb-4">
+                {video.title}
+              </h3>
+              <p className="italic text-xl md:text-2xl text-primary/80 font-light">
+                {video.subtitle}
+              </p>
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="h-[1px] bg-primary/30 mt-8 mx-auto"
+              />
+            </motion.div>
           </div>
         </div>
       ))}
